@@ -1,0 +1,51 @@
+<div class="invest-tools-page memos-page">
+  <h1>{{i18n "invest_tools.memos.title"}}</h1>
+
+  <div class="invest-add-form memo-form">
+    <textarea
+      rows="2"
+      value={{this.content}}
+      placeholder={{i18n "invest_tools.memos.placeholder"}}
+      {{on "input" this.updateContent}}
+    ></textarea>
+    <select {{on "change" this.updateWatchlistItemId}}>
+      <option value="">（不关联自选股）</option>
+      {{#each this.watchlistOptions as |opt|}}
+        <option value={{opt.id}} selected={{if (eq opt.id this.watchlistItemId) "selected"}}>
+          {{opt.name}}（{{opt.symbol}}）
+        </option>
+      {{/each}}
+    </select>
+    <button type="button" class="btn btn-primary" disabled={{this.saving}} {{on "click" this.addMemo}}>
+      {{i18n "invest_tools.memos.add"}}
+    </button>
+  </div>
+
+  {{#if this.error}}
+    <div class="invest-error">{{this.error}}</div>
+  {{/if}}
+
+  {{#if this.items.length}}
+    <ul class="memo-list">
+      {{#each this.items as |memo|}}
+        <li class="memo-item {{if memo.done "done"}}">
+          <label class="memo-check">
+            <input type="checkbox" checked={{memo.done}} {{on "change" (fn this.toggleDone memo)}} />
+          </label>
+          <div class="memo-body">
+            <div class="memo-content">{{memo.content}}</div>
+            <div class="memo-meta">
+              {{#if memo.symbol}}
+                <span class="market-badge">{{memo.item_name}}（{{memo.symbol}}）</span>
+              {{/if}}
+              <span class="memo-time">{{memo.updated_at}}</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-small" {{on "click" (fn this.deleteMemo memo)}}>删除</button>
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="invest-empty">{{i18n "invest_tools.memos.empty"}}</p>
+  {{/if}}
+</div>

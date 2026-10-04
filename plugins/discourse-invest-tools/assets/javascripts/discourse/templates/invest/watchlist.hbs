@@ -1,0 +1,71 @@
+<div class="invest-tools-page watchlist-page">
+  <h1>{{i18n "invest_tools.watchlist.title"}}</h1>
+
+  <div class="invest-add-form">
+    <input
+      type="text"
+      value={{this.symbol}}
+      placeholder={{i18n "invest_tools.watchlist.symbol"}}
+      {{on "input" this.updateSymbol}}
+    />
+    <input
+      type="text"
+      value={{this.name}}
+      placeholder={{i18n "invest_tools.watchlist.name"}}
+      {{on "input" this.updateName}}
+    />
+    <select {{on "change" this.updateMarket}}>
+      {{#each this.markets as |m|}}
+        <option value={{m}} selected={{if (eq m this.market) "selected"}}>{{m}}</option>
+      {{/each}}
+    </select>
+    <input
+      type="text"
+      value={{this.note}}
+      placeholder={{i18n "invest_tools.watchlist.note"}}
+      {{on "input" this.updateNote}}
+    />
+    <button type="button" class="btn btn-primary" disabled={{this.saving}} {{on "click" this.addItem}}>
+      {{i18n "invest_tools.watchlist.add"}}
+    </button>
+  </div>
+
+  {{#if this.error}}
+    <div class="invest-error">{{this.error}}</div>
+  {{/if}}
+
+  {{#if this.items.length}}
+    <table class="invest-table">
+      <thead>
+        <tr>
+          <th>{{i18n "invest_tools.watchlist.symbol"}}</th>
+          <th>{{i18n "invest_tools.watchlist.name"}}</th>
+          <th>{{i18n "invest_tools.watchlist.market"}}</th>
+          <th>{{i18n "invest_tools.watchlist.note"}}</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.items as |item|}}
+          <tr>
+            <td class="symbol">{{item.symbol}}</td>
+            <td>{{item.name}}</td>
+            <td><span class="market-badge">{{item.market}}</span></td>
+            <td class="note">{{item.note}}</td>
+            <td>
+              {{#if item.can_delete}}
+                <button
+                  type="button"
+                  class="btn btn-small btn-danger"
+                  {{on "click" (fn this.deleteItem item)}}
+                >删除</button>
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p class="invest-empty">{{i18n "invest_tools.watchlist.empty"}}</p>
+  {{/if}}
+</div>

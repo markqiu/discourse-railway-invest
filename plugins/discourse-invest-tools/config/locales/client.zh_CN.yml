@@ -1,0 +1,18 @@
+zh_CN:
+  site_settings:
+    invest_tools_enabled: "启用社区投资工具（自选股与备忘录）"
+  invest_tools:
+    watchlist:
+      title: "共同自选股"
+      add: "添加"
+      symbol: "代码"
+      name: "名称"
+      market: "市场"
+      note: "备注"
+      empty: "还没有自选股，来添加第一只吧！"
+    memos:
+      title: "我的备忘录"
+      placeholder: "记点什么，别让灵感跑了……"
+      add: "添加备忘"
+      empty: "还没有备忘录。"
+      done: "完成"
